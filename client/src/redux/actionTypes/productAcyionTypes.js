@@ -1,0 +1,8 @@
+const productActionTypes = {
+    GET_PRODUCT: "GET_PRODUCT",
+    CART_ADD_REMOVE: "CART_ADD_REMOVE",
+    GET_CART_FROM_LS: "GET_CART_FROM_LS",
+    GET_ALL_CURRENCY: "GET_ALL_CURRENCY",
+    CHANGE_CURRENCY: "CHANGE_CURRENCY"
+}
+export default productActionTypes

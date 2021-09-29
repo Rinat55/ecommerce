@@ -1,23 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, {useEffect} from 'react'
+import {useSelector, useDispatch} from "react-redux";
+import Header from "./header";
+import {getProducts} from "../redux/actions/productAction";
+import ProductCard from "./common/productCard";
+
 
 const Main = () => {
+    const dispatch = useDispatch()
+    const {productList, cartList} = useSelector((s) => s.products)
 
-  const [test, setTest] = useState('loading...')
-  useEffect(() => {
-    axios.get('/api/v1/test')
-      .then(({ data }) => setTest(JSON.stringify(data)))
-      .catch(() => setTest('server error'))
-  })
+    useEffect(() => {
+        dispatch(getProducts())
+    }, [])
 
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="bg-indigo-600 hover:text-red-500 active:bg-indigo-800 text-white font-bold rounded-lg p-10 custom-shadow-style">
-        <p>This is TEST page</p>
-        <p>Server test: {test}</p>
-      </div>
-    </div>
-  )
+    return (
+        <>
+            <Header/>
+            <div className="container mx-auto my-4">
+                <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+                    {productList.map(it => {
+                        const quantity = cartList[it.id]?.quantity || 0
+                        return <ProductCard key={it.id} quantity={quantity} product={it}/>
+
+                        }
+                    )}
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default Main
